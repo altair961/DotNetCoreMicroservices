@@ -19,20 +19,17 @@ namespace HelloMicroservices
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseOwin(buildFunc =>
-                buildFunc.UseNancy()
-            );
-            // if (env.IsDevelopment())
-            // {
-            //     app.UseDeveloperExceptionPage();
-            // }
-
-            // app.Run(async (context) =>
-            // {
-            //     await context.Response.WriteAsync("Hello World!");
-            // });
+            {
+                buildFunc(next => env =>
+                {
+                    System.Console.WriteLine("Got request");
+                    return next(env);
+                });
+                buildFunc.UseNancy();
+            });
         }
     }
 }
