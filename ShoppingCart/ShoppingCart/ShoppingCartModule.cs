@@ -5,14 +5,14 @@ namespace ShoppingCart.ShoppingCart
     using Nancy.ModelBinding;
 
     public class ShoppingCartModule : NancyModule
-    {          
+    {
         public ShoppingCartModule() : base("/shoppingcart")
         {
-            Get("/{userid:int}", parameters => 
-            { 
-                return DateTime.UtcNow; 
+            Get<string>("/{userid:int}", parameters =>
+            {
+                var userId = (int)parameters.userid;
+                return "l";
             });
         }
-        
     }
 }
