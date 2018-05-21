@@ -6,12 +6,14 @@ namespace ShoppingCart.ShoppingCart
 
     public class ShoppingCartModule : NancyModule
     {
-        public ShoppingCartModule() : base("/shoppingcart")
+        public ShoppingCartModule(IShoppingCartStore shoppingCartStore) : base("/shoppingcart")
         {
-            Get<string>("/{userid:int}", parameters =>
+            Get<ShoppingCart>("/{userid:int}", parameters =>
             {
                 var userId = (int)parameters.userid;
-                return "l";
+                
+                var result = shoppingCartStore.Get(userId);
+                return result;
             });
         }
     }
