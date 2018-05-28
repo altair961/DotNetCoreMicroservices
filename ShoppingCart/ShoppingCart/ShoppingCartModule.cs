@@ -15,6 +15,20 @@ namespace ShoppingCart.ShoppingCart
                 var result = shoppingCartStore.Get(userId);
                 return result;
             });
+
+            Post<ShoppingCart>("/{userid:int}/items",
+                async (parameters, _) =>
+                {
+                    var productCatalogueIds = this.Bind<int>();
+                    var userId = (int) parameters.userid;
+                    
+                    var shoppingCart = shoppingCartStore.Get(userId);
+                    // var shoppingCartItems = await productCatalogueIds.GetShoppingCartItems(productCataloguesIds).ConfigureAwait(false);
+
+
+                    
+                    return shoppingCart;
+                });
         }
     }
 }
