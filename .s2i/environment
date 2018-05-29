@@ -1,1 +1,1 @@
-DOTNET_STARTUP_PROJECT=HelloMicroservices/HelloMicroservices.csproj
+DOTNET_STARTUP_PROJECT=ShoppingCart/ShoppingCart.csproj
