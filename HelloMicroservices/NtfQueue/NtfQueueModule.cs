@@ -2,6 +2,7 @@ namespace HelloMicroservices.Queue
 {
     using System;
     using Nancy;
+    using Nancy.ModelBinding;
 
     public class QueueModule : NancyModule
     {
@@ -12,7 +13,9 @@ namespace HelloMicroservices.Queue
                 async ( parameters, _) =>
                 {
                     var ntfId = (int) parameters.ntfId;
-                    return "Notification with id " + ntfId + " has been added to the queue.";
+                    var notification = this.Bind<Notification>();
+                    
+                    return "Notification with phone: " + notification.RecipientPhone + " has been added to the queue.";
                 });
         }
     }
