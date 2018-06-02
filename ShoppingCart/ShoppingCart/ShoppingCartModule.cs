@@ -6,28 +6,27 @@ namespace ShoppingCart.ShoppingCart
 
     public class ShoppingCartModule : NancyModule
     {
-        public ShoppingCartModule(IShoppingCartStore shoppingCartStore) : base("/shoppingcart")
+        public ShoppingCartModule()//(IShoppingCartStore shoppingCartStore) : base("/shoppingcart")
         {
-            Get<ShoppingCart>("/{userid:int}", parameters =>
-            {
-                var userId = (int)parameters.userid;
+            // Get<ShoppingCart>("/{userid:int}", parameters =>
+            // {
+            //     var userId = (int)parameters.userid;
                 
-                var result = shoppingCartStore.Get(userId);
-                return result;
-            });
+            //     var result = shoppingCartStore.Get(userId);
+            //     return result;
+            // });
 
-            Post<ShoppingCart>("/{userid:int}/items",
+            Post("/{userid:int}/items",
                 async (parameters, _) =>
                 {
-                    var productCatalogueIds = this.Bind<int>();
-                    var userId = (int) parameters.userid;
+                    var productCatalogueIds = this.Bind<int[]>();
+                  //  var userId = (int) parameters.userid;
                     
-                    var shoppingCart = shoppingCartStore.Get(userId);
-                    // var shoppingCartItems = await productCatalogueIds.GetShoppingCartItems(productCataloguesIds).ConfigureAwait(false);
+                   // var shoppingCart = shoppingCartStore.Get(userId);
 
 
                     
-                    return shoppingCart;
+                    return productCatalogueIds[0].ToString();
                 });
         }
     }
