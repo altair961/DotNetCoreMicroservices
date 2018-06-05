@@ -11,9 +11,9 @@ namespace NotificationSystem.SmsModule
                 {
                     var smsId = (int)parameters.smsid;
 
-                    var message = this.Bind<SmsNotification>();
+                    var smsNotification =  this.Bind<SmsNotification>();
 
-                    return smsId.ToString();
+                    return smsNotification.Message;
                 });
         }
     }
