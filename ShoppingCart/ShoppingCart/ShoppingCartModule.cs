@@ -6,7 +6,8 @@ namespace ShoppingCart.ShoppingCart
 
     public class ShoppingCartModule : NancyModule
     {
-        public ShoppingCartModule(IShoppingCartStore shoppingCartStore) : base("/shoppingcart")
+        public ShoppingCartModule(IShoppingCartStore shoppingCartStore,
+            IProductCatalogueClient productCatalogue) : base("/shoppingcart")
         {
             Get("/{userid:int}", parameters =>
             {
@@ -15,18 +16,24 @@ namespace ShoppingCart.ShoppingCart
                 return shoppingCartStore.Get(userId);
             });
 
-            // Post("/{userid:int}/items",
-            //     async (parameters, _) =>
-            //     {
-            //         var productCatalogueIds = this.Bind<int[]>();
-            //       //  var userId = (int) parameters.userid;
+            Post("/{userid:int}/items",
+                async (parameters, _) =>
+                {
+                    var productCatalogueIds = this.Bind<int[]>();
+                    var userId = (int) parameters.userid;
                     
-            //        // var shoppingCart = shoppingCartStore.Get(userId);
+                    var shoppingCart = shoppingCartStore.Get(userId);
 
-
+                    var shoppingCartItems = await
+                        productCatalogue
+                        .GetShoppingCartItems(productCatalogueIds)
+                        .ConfigureAwait(false);
                     
-            //         return productCatalogueIds[0].ToString();
-            //     });
+                    shoppingCart.AddItems(shoppingCartItems);//, eventStore);
+                    // shoppingCartStore.Save(shoppingCart);
+
+                    return shoppingCart;
+                });
         }
     }
 }
