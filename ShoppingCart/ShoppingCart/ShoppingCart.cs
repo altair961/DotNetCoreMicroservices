@@ -16,7 +16,8 @@ namespace ShoppingCart.ShoppingCart
                                                                              //IEventStore eventStore)
         {
             foreach (var item in shoppingCartItems)
-                if (this.items.Add(item)) ;
+                if (this.items.Add(item));
+                    //then generate event
             // eventStore.Raise("ShoppingCartItemAdded", new { UserId, item });
         }
     }
