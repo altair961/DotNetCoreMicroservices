@@ -36,6 +36,19 @@ namespace ShoppingCart.ShoppingCart
 
                 return shoppingCart;
             });
+
+            // Remove items from the shopping cart
+            Delete("/{userid:int}/items", parameters => 
+            {
+                var productCatalogueIds = this.Bind<int[]>();
+                var userId = (int)parameters.userid;
+
+                var shoppingCart = shoppingCartStore.Get(userId);
+                shoppingCart.RemoveItems(productCatalogueIds); //eventStore);
+                // shoppingCartStore.Save(shoppingCart);
+
+                return shoppingCart;
+            });
         }
     }
 }
